@@ -6,6 +6,9 @@ package com.oxandon.found.arch.protocol;
  */
 
 public interface IMvpView extends IMvp {
+    String STR_LOADING = "STR_LOADING";
+    String BOOL_LOADING = "BOOL_LOADING";
+
     /**
      * View层对外提供数据
      *

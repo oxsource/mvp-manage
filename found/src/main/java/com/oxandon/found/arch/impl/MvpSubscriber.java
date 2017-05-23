@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.oxandon.found.arch.protocol.IMvpMessage;
+import com.oxandon.found.arch.protocol.IMvpView;
 
 import io.reactivex.subscribers.DisposableSubscriber;
 
@@ -17,6 +18,13 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
     private IMvpMessage message;
 
     public MvpSubscriber(@NonNull MvpPresenter presenter, @NonNull IMvpMessage message) {
+        this.presenter = presenter;
+        this.message = message;
+    }
+
+    public MvpSubscriber(@NonNull MvpPresenter presenter, @NonNull IMvpMessage message, String loading, boolean cancel) {
+        message.from().appendParams(IMvpView.STR_LOADING, loading);
+        message.from().appendParams(IMvpView.BOOL_LOADING, cancel);
         this.presenter = presenter;
         this.message = message;
     }
@@ -38,7 +46,6 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
     @CallSuper
     @Override
     public void onError(Throwable t) {
-        doFinishedWork();
         String text = t.getMessage();
         if (TextUtils.isEmpty(text)) {
             text = defaultErrorMsg();
@@ -46,6 +53,7 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
         MvpMessage.Builder builder = new MvpMessage.Builder();
         builder.reverse(message()).what(IMvpMessage.WHAT_FAILURE).msg(text);
         presenter().dispatcher().dispatchToView(builder.build());
+        doFinishedWork();
     }
 
     @Override
@@ -59,6 +67,8 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
         MvpMessage.Builder builder = new MvpMessage.Builder();
         IMvpMessage msg = builder.reverse(message()).what(IMvpMessage.WHAT_FINISH).build();
         presenter().dispatcher().dispatchToView(msg);
+        presenter = null;
+        message = null;
     }
 
     protected String defaultErrorMsg() {

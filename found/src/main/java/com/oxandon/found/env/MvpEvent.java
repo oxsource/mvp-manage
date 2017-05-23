@@ -18,12 +18,11 @@ public class MvpEvent {
      * 单播
      *
      * @param uri
-     * @param what
      * @param obj
      */
-    public static void singleCast(IMvpUri uri, int what, Object obj) {
+    public static void singleCast(IMvpUri uri, Object obj) {
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.to(uri).what(what).obj(obj);
+        builder.to(uri).obj(obj);
         EventBus.getDefault().post(builder.build());
     }
 
@@ -31,21 +30,20 @@ public class MvpEvent {
      * 广播
      *
      * @param uri
-     * @param what
      * @param obj
      */
-    public static void multiCast(IMvpUri uri, int what, Object obj) {
+    public static void multiCast(IMvpUri uri, Object obj) {
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.from(uri).what(what).obj(obj);
+        builder.from(uri).obj(obj);
         EventBus.getDefault().post(builder.build());
     }
 
-    public static boolean singleCast(IMvpMessage message, @NonNull IMvpUri uri) {
-        return uri.authority().equals(message.to().authority());
+    public static boolean singleCast(IMvpMessage message, @NonNull String authority) {
+        return authority.equals(message.to().authority());
     }
 
-    public static boolean multiCast(IMvpMessage message, @NonNull IMvpUri uri) {
-        return uri.authority().equals(message.from().authority());
+    public static boolean multiCast(IMvpMessage message, @NonNull String authority) {
+        return authority.equals(message.from().authority());
     }
 
     public static String catchException(Throwable e, String split, String msg) {

@@ -3,14 +3,14 @@ package com.oxandon.found.arch.impl;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
-import com.oxandon.found.except.CheckArgumentException;
-import com.oxandon.found.log.FoundLog;
 import com.oxandon.found.arch.anno.Mvp;
 import com.oxandon.found.arch.anno.RequestMapping;
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpPresenter;
 import com.oxandon.found.arch.protocol.IMvpUri;
+import com.oxandon.found.except.CheckArgumentException;
+import com.oxandon.found.log.FoundLog;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -106,6 +106,12 @@ public class MvpPresenter implements IMvpPresenter {
         tasking.clear();
         //防止双向引用
         dispatcher = null;
+    }
+
+    protected IMvpMessage reverse(IMvpMessage msg) {
+        MvpMessage.Builder builder = new MvpMessage.Builder();
+        builder.reverse(msg).what(msg.what()).obj(msg.obj()).msg(msg.msg());
+        return builder.build();
     }
 
     protected <T> void doRxSubscribe(@NonNull Flowable<T> flow, @NonNull MvpSubscriber<T> subscriber) {

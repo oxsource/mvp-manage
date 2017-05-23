@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.oxandon.found.ui.activity.MvpActivity;
 import com.oxandon.found.ui.widget.IHintView;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by peng on 2017/5/22.
  */
@@ -27,6 +29,9 @@ public abstract class MvpFragment extends Fragment implements IFragment {
         visibility = new FragmentVisibility(this);
         visibility.onCreate(savedInstanceState);
         getFoundActivity().addToInterceptor(this);
+        if (null != getEventBus()) {
+            getEventBus().register(this);
+        }
     }
 
     @Nullable
@@ -112,7 +117,14 @@ public abstract class MvpFragment extends Fragment implements IFragment {
     public void onDestroy() {
         getFoundActivity().removeFromInterceptor(this);
         visibility.destroy();
+        if (null != getEventBus()) {
+            getEventBus().unregister(this);
+        }
         super.onDestroy();
+    }
+
+    protected EventBus getEventBus() {
+        return null;
     }
 
     protected final MvpActivity getFoundActivity() {

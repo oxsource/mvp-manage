@@ -37,6 +37,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit-adapters:2.3.0'
     //SERIALIZATION
     compile 'org.ligboy.retrofit2:converter-fastjson:2.1.0'
+    //EVENT BUS3.0
+    compile 'org.greenrobot:eventbus:3.0.0'
     //Android Signature V2 Scheme channel
     compile 'com.meituan.android.walle:library:1.1.1'
     //MULTI DEX

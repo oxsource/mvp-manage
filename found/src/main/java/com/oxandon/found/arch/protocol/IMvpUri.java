@@ -17,5 +17,7 @@ public interface IMvpUri extends IMvp {
 
     <T> T getParams(String key, T value);
 
+    boolean samePath(IMvpUri uri);
+
     void clear();
 }

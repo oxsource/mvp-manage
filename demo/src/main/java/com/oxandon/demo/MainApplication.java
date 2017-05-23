@@ -1,6 +1,6 @@
 package com.oxandon.demo;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.oxandon.found.env.FoundEnvironment;
 
@@ -8,7 +8,7 @@ import com.oxandon.found.env.FoundEnvironment;
  * Created by peng on 2017/5/22.
  */
 
-public class MainApplication extends Application {
+public class MainApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {

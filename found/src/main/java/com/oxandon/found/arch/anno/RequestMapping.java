@@ -1,4 +1,4 @@
-package com.oxandon.found.mvp.anno;
+package com.oxandon.found.arch.anno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

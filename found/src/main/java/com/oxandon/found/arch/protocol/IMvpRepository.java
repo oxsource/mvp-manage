@@ -1,4 +1,4 @@
-package com.oxandon.found.mvp.protocol;
+package com.oxandon.found.arch.protocol;
 
 import com.oxandon.found.parcel.IParcelFormat;
 

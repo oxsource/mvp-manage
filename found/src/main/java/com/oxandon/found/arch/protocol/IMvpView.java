@@ -1,4 +1,4 @@
-package com.oxandon.found.mvp.protocol;
+package com.oxandon.found.arch.protocol;
 
 /**
  * MVP用户视图层

@@ -1,4 +1,4 @@
-package com.oxandon.found.mvp.protocol;
+package com.oxandon.found.arch.protocol;
 
 /**
  * Created by peng on 2017/5/20.

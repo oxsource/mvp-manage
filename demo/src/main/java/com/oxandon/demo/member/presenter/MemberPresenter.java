@@ -4,13 +4,13 @@ import android.text.TextUtils;
 
 import com.oxandon.demo.common.HttpResult;
 import com.oxandon.demo.member.model.MemberRepository;
-import com.oxandon.found.mvp.anno.Mvp;
-import com.oxandon.found.mvp.anno.RequestMapping;
-import com.oxandon.found.mvp.impl.HttpPresenter;
-import com.oxandon.found.mvp.impl.MvpMessage;
-import com.oxandon.found.mvp.impl.MvpSubscriber;
-import com.oxandon.found.mvp.protocol.IMvpDispatcher;
-import com.oxandon.found.mvp.protocol.IMvpMessage;
+import com.oxandon.found.arch.anno.Mvp;
+import com.oxandon.found.arch.anno.RequestMapping;
+import com.oxandon.found.arch.impl.HttpPresenter;
+import com.oxandon.found.arch.impl.MvpMessage;
+import com.oxandon.found.arch.impl.MvpSubscriber;
+import com.oxandon.found.arch.protocol.IMvpDispatcher;
+import com.oxandon.found.arch.protocol.IMvpMessage;
 
 import org.reactivestreams.Publisher;
 

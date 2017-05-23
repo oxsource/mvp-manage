@@ -1,6 +1,6 @@
-package com.oxandon.found.mvp.impl;
+package com.oxandon.found.arch.impl;
 
-import com.oxandon.found.mvp.protocol.IMvpUri;
+import com.oxandon.found.arch.protocol.IMvpUri;
 
 import java.util.HashMap;
 import java.util.Map;

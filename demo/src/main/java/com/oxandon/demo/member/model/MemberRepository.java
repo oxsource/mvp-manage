@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.oxandon.demo.common.HttpResult;
 import com.oxandon.found.http.INetworkEngine;
-import com.oxandon.found.mvp.impl.MvpRepository;
+import com.oxandon.found.arch.impl.MvpRepository;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -3,8 +3,8 @@ package com.oxandon.demo;
 import android.support.annotation.NonNull;
 
 import com.oxandon.demo.member.presenter.MemberPresenter;
-import com.oxandon.found.mvp.impl.MvpDispatcher;
-import com.oxandon.found.mvp.protocol.IMvpPresenter;
+import com.oxandon.found.arch.impl.MvpDispatcher;
+import com.oxandon.found.arch.protocol.IMvpPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

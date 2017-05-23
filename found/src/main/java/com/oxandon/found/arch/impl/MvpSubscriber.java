@@ -1,10 +1,10 @@
-package com.oxandon.found.mvp.impl;
+package com.oxandon.found.arch.impl;
 
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.oxandon.found.mvp.protocol.IMvpMessage;
+import com.oxandon.found.arch.protocol.IMvpMessage;
 
 import io.reactivex.subscribers.DisposableSubscriber;
 

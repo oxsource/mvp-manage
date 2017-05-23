@@ -1,6 +1,6 @@
 package com.oxandon.found.ui.activity;
 
-import com.oxandon.found.ui.fragment.FoundFragment;
+import com.oxandon.found.ui.fragment.MvpFragment;
 
 /**
  * Created by peng on 2017/5/22.
@@ -19,5 +19,5 @@ public interface IActivityInterceptor {
      *
      * @return
      */
-    FoundFragment fragment();
+    MvpFragment fragment();
 }

@@ -1,12 +1,12 @@
-package com.oxandon.found.mvp.impl;
+package com.oxandon.found.arch.impl;
 
 import android.support.annotation.NonNull;
 
-import com.oxandon.found.mvp.anno.Mvp;
-import com.oxandon.found.mvp.protocol.IMvpDispatcher;
-import com.oxandon.found.mvp.protocol.IMvpMessage;
-import com.oxandon.found.mvp.protocol.IMvpPresenter;
-import com.oxandon.found.mvp.protocol.IMvpView;
+import com.oxandon.found.arch.anno.Mvp;
+import com.oxandon.found.arch.protocol.IMvpDispatcher;
+import com.oxandon.found.arch.protocol.IMvpMessage;
+import com.oxandon.found.arch.protocol.IMvpPresenter;
+import com.oxandon.found.arch.protocol.IMvpView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;

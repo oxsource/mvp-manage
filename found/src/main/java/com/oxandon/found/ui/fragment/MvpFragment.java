@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.oxandon.found.ui.activity.FoundActivity;
+import com.oxandon.found.ui.activity.MvpActivity;
 import com.oxandon.found.ui.widget.IHintView;
 
 /**
  * Created by peng on 2017/5/22.
  */
 
-public abstract class FoundFragment extends Fragment implements IFragment {
+public abstract class MvpFragment extends Fragment implements IFragment {
     private ViewGroup layout;
     private IHintView iHintView;
     private FragmentVisibility visibility;
@@ -96,7 +96,7 @@ public abstract class FoundFragment extends Fragment implements IFragment {
     }
 
     @Override
-    public final FoundFragment fragment() {
+    public final MvpFragment fragment() {
         return this;
     }
 
@@ -115,10 +115,10 @@ public abstract class FoundFragment extends Fragment implements IFragment {
         super.onDestroy();
     }
 
-    protected final FoundActivity getFoundActivity() {
-        if (!(getActivity() instanceof FoundActivity)) {
+    protected final MvpActivity getFoundActivity() {
+        if (!(getActivity() instanceof MvpActivity)) {
             throw new IllegalStateException("FoundFragment must bind to FoundActivity");
         }
-        return (FoundActivity) getActivity();
+        return (MvpActivity) getActivity();
     }
 }

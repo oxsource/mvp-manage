@@ -17,7 +17,7 @@ import java.util.List;
  * Created by peng on 2017/5/22.
  */
 
-public abstract class FoundActivity extends FragmentActivity implements IActivity {
+public abstract class MvpActivity extends FragmentActivity implements IActivity {
     private ViewGroup layout;
     private IHintView iHintView;
     private List<IActivityInterceptor> activityInterceptors = new ArrayList<>();

@@ -1,18 +1,18 @@
-package com.oxandon.found.mvp.impl;
+package com.oxandon.found.arch.impl;
 
-import com.oxandon.found.mvp.protocol.IMvpModel;
-import com.oxandon.found.mvp.protocol.IMvpPresenter;
+import com.oxandon.found.arch.protocol.IMvpRepository;
 import com.oxandon.found.parcel.IParcelFormat;
 import com.oxandon.found.parcel.ParcelFormatImpl;
 
 /**
- * Created by peng on 2017/5/22.
+ * Created by peng on 2017/5/23.
  */
 
-public class MvpModel<T extends IMvpPresenter> implements IMvpModel<T> {
+public class MvpRepository implements IMvpRepository {
+
     private IParcelFormat parcelFormat;
 
-    public MvpModel() {
+    public MvpRepository() {
         parcelFormat = new ParcelFormatImpl();
     }
 

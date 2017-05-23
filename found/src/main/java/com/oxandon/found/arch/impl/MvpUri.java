@@ -46,11 +46,6 @@ public class MvpUri implements IMvpUri {
     }
 
     @Override
-    public boolean samePath(IMvpUri uri) {
-        return null != uri && authority().equals(uri.authority()) && path().equals(uri.path());
-    }
-
-    @Override
     public void clear() {
         authority = null;
         path = null;

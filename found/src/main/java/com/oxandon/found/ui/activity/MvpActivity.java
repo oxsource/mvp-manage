@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.oxandon.found.ui.widget.IHintView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,9 @@ public abstract class MvpActivity extends FragmentActivity implements IActivity 
         setContentView(layout);
         iHintView = onBuildHintView();
         onInitViews(savedInstanceState);
+        if (null != getEventBus()) {
+            getEventBus().register(this);
+        }
     }
 
     @Override
@@ -112,6 +117,13 @@ public abstract class MvpActivity extends FragmentActivity implements IActivity 
     @Override
     protected void onDestroy() {
         activityInterceptors.clear();
+        if (null != getEventBus()) {
+            getEventBus().unregister(this);
+        }
         super.onDestroy();
+    }
+
+    protected EventBus getEventBus() {
+        return null;
     }
 }

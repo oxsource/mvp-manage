@@ -41,11 +41,11 @@ public class MvpEvent {
     }
 
     public static boolean singleCast(IMvpMessage message, @NonNull IMvpUri uri) {
-        return uri.samePath(message.to());
+        return uri.authority().equals(message.to().authority());
     }
 
     public static boolean multiCast(IMvpMessage message, @NonNull IMvpUri uri) {
-        return uri.samePath(message.from());
+        return uri.authority().equals(message.from().authority());
     }
 
     public static String catchException(Throwable e, String split, String msg) {

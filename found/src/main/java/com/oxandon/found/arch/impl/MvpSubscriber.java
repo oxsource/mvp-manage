@@ -25,8 +25,8 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
     protected void onStart() {
         super.onStart();
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        IMvpMessage msg = builder.reverse(message).what(IMvpMessage.WHAT_START).build();
-        presenter.dispatcher().dispatchToView(msg);
+        IMvpMessage msg = builder.reverse(message()).what(IMvpMessage.WHAT_START).build();
+        presenter().dispatcher().dispatchToView(msg);
     }
 
     @CallSuper
@@ -44,8 +44,8 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
             text = defaultErrorMsg();
         }
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.reverse(message).what(IMvpMessage.WHAT_FAILURE).msg(text);
-        presenter.dispatcher().dispatchToView(builder.build());
+        builder.reverse(message()).what(IMvpMessage.WHAT_FAILURE).msg(text);
+        presenter().dispatcher().dispatchToView(builder.build());
     }
 
     @Override
@@ -54,14 +54,22 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
 
     protected void doFinishedWork() {
         //从消息任务对列中移除任务
-        presenter.removeTask(message);
+        presenter().removeTask(message());
         //构建任务完成消息并通知
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        IMvpMessage msg = builder.reverse(message).what(IMvpMessage.WHAT_FINISH).build();
-        presenter.dispatcher().dispatchToView(msg);
+        IMvpMessage msg = builder.reverse(message()).what(IMvpMessage.WHAT_FINISH).build();
+        presenter().dispatcher().dispatchToView(msg);
     }
 
     protected String defaultErrorMsg() {
         return "请求出错";
+    }
+
+    protected MvpPresenter presenter() {
+        return presenter;
+    }
+
+    protected IMvpMessage message() {
+        return message;
     }
 }

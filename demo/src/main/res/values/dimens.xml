@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_widget_margin">5dp</dimen>
+    <!--SkinProgressDialog-->
+    <dimen name="skin_progress_bar_size">40dp</dimen>
+    <dimen name="skin_progress_dlg_height">105dp</dimen>
+    <dimen name="skin_progress_dlg_width">120dp</dimen>
+
+    <dimen name="common_text_size_xs">12sp</dimen>
+</resources>

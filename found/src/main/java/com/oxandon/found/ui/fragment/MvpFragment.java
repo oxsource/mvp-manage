@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oxandon.found.arch.impl.MvpMessage;
-import com.oxandon.found.arch.protocol.IMvpDispatcher;
+import com.oxandon.found.arch.impl.MvpSdk;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpView;
 import com.oxandon.found.ui.activity.MvpActivity;
@@ -18,6 +18,8 @@ import com.oxandon.found.ui.widget.AlertTemple;
 import com.oxandon.found.ui.widget.IHintView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import static com.oxandon.found.arch.impl.MvpSdk.getDispatcher;
 
 /**
  * Created by peng on 2017/5/22.
@@ -124,8 +126,8 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (null != getDispatcher()) {
-            getDispatcher().detach(this);
+        if (null != MvpSdk.getDispatcher()) {
+            MvpSdk.getDispatcher().detach(this);
         }
         layout = null;
     }
@@ -139,6 +141,15 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
             getEventBus().unregister(this);
         }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean function(IMvpMessage msg) {
+        boolean success = false;
+        if (null != getDispatcher()) {
+            success = getDispatcher().dispatchToPresenter(msg);
+        }
+        return success;
     }
 
     @Override
@@ -209,8 +220,6 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     protected EventBus getEventBus() {
         return null;
     }
-
-    protected abstract IMvpDispatcher getDispatcher();
 
     protected final MvpActivity getFoundActivity() {
         if (!(getActivity() instanceof MvpActivity)) {

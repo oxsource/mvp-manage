@@ -84,8 +84,10 @@ public class MvpPresenter implements IMvpPresenter {
 
     @Override
     public void removeTask(IMvpMessage message) {
-        String path = message.to().path();
-        tasking.remove(path);
+        if (null != message && null != message.to()) {
+            String path = message.to().path();
+            tasking.remove(path);
+        }
     }
 
     @Override

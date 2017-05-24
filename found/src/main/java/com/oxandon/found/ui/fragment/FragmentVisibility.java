@@ -116,8 +116,8 @@ public class FragmentVisibility {
 
     //测试打印onVisibleToUser和onInvisibleToUser生命周期
     private void printVisibleToUser(@VisibleType int type, boolean visible) {
-        if (FoundEnvironment.isDebug()) {
-            String content = this.getClass().getSimpleName() + "-->Visible=" + visible + "，Type=";
+        if (FoundEnvironment.isDebug() && null != fragment) {
+            String content = fragment.getClass().getSimpleName() + "-->Visible=" + visible + "，Type=";
             switch (type) {
                 case VISIBLE_NORMAL:
                     content += "NORMAL";
@@ -134,10 +134,10 @@ public class FragmentVisibility {
     }
 
     private void printVisibleLayout(boolean normal, boolean visible) {
-        if (FoundEnvironment.isDebug()) {
+        if (FoundEnvironment.isDebug() && null != fragment) {
             String location = normal ? "NORMAL" : "HINT";
             boolean flag = null == fragment.getLayout();
-            FoundLog.d(this.getClass().getSimpleName() + "-->getLayout()==null: " + flag + ",Location=" + location + "," + "Visible=" + visible);
+            FoundLog.d(fragment.getClass().getSimpleName() + "-->getLayout()==null: " + flag + ",Location=" + location + "," + "Visible=" + visible);
         }
     }
 }

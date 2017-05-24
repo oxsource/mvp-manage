@@ -22,6 +22,7 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
  * IMvpPresenter的默认实现
@@ -116,7 +117,7 @@ public class MvpPresenter implements IMvpPresenter {
         return builder.build();
     }
 
-    protected <T> void doRxSubscribe(@NonNull Flowable<T> flow, @NonNull MvpSubscriber<T> subscriber) {
+    protected <T> void doRxSubscribe(@NonNull Flowable<T> flow, @NonNull DisposableSubscriber<T> subscriber) {
         flow.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
         composite.add(subscriber);
     }

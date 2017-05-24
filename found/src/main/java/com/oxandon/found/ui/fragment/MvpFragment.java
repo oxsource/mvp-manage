@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.oxandon.found.arch.impl.MvpMessage;
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
+import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpView;
 import com.oxandon.found.ui.activity.MvpActivity;
+import com.oxandon.found.ui.widget.AlertTemple;
 import com.oxandon.found.ui.widget.IHintView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -135,6 +139,71 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
             getEventBus().unregister(this);
         }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean dispatch(IMvpMessage msg) {
+        String path = msg.to().path();
+        switch (msg.what()) {
+            case IMvpMessage.WHAT_START:
+                onMvpStart(msg, path);
+                break;
+            case IMvpMessage.WHAT_FINISH:
+                onMvpFinish(msg, path);
+                break;
+            case IMvpMessage.WHAT_PROGRESS:
+                onMvpProgress(msg, path);
+                break;
+            case IMvpMessage.WHAT_FAILURE:
+                onMvpFailure(msg, path);
+                break;
+            case IMvpMessage.WHAT_SUCCESS:
+                onMvpSuccess(msg, path);
+                break;
+            case IMvpMessage.WHAT_PERMISSION:
+                onMvpPermission(msg, path);
+                break;
+        }
+        return false;
+    }
+
+    protected void onMvpStart(final IMvpMessage msg, String path) {
+        String loading = msg.to().getParams(STR_LOADING, "");
+        if (!TextUtils.isEmpty(loading)) {
+            boolean cancel = msg.to().getParams(BOOL_LOADING, false);
+            getHintView().showLoading(loading, cancel);
+        }
+    }
+
+    protected void onMvpFinish(final IMvpMessage msg, String path) {
+        String loading = msg.to().getParams(STR_LOADING, "");
+        if (!TextUtils.isEmpty(loading)) {
+            getHintView().hideLoading();
+        }
+    }
+
+    protected void onMvpProgress(final IMvpMessage msg, String path) {
+    }
+
+    protected void onMvpFailure(final IMvpMessage msg, String path) {
+        String errMsg = TextUtils.isEmpty(msg.msg()) ? "请求出错啦" : msg.msg();
+        getHintView().showToast(errMsg, 0);
+    }
+
+    protected void onMvpSuccess(final IMvpMessage msg, String path) {
+
+    }
+
+    protected void onMvpPermission(final IMvpMessage msg, String path) {
+        AlertTemple alert = new AlertTemple("提示", msg.msg());
+        alert.setPositiveClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MvpMessage.Builder builder = new MvpMessage.Builder();
+                function(builder.reverse(msg).build());
+            }
+        });
+        getHintView().showAlert(alert, false);
     }
 
     protected EventBus getEventBus() {

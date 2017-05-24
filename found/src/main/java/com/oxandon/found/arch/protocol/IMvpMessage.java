@@ -10,6 +10,7 @@ public interface IMvpMessage extends IMvp {
     int WHAT_FINISH = 400;
     int WHAT_FAILURE = 500;
     int WHAT_PROGRESS = 300;
+    int WHAT_PERMISSION = 600;
 
     int what();
 

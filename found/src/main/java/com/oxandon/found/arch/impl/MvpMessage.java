@@ -57,6 +57,18 @@ public final class MvpMessage implements IMvpMessage {
         public Builder reverse(@NonNull IMvpMessage message) {
             this.to = message.from();
             this.from = message.to();
+            this.what = message.what();
+            this.obj = message.obj();
+            this.msg = message.msg();
+            return this;
+        }
+
+        public Builder clone(@NonNull IMvpMessage message) {
+            this.to = message.from();
+            this.from = message.to();
+            this.what = message.what();
+            this.obj = message.obj();
+            this.msg = message.msg();
             return this;
         }
 

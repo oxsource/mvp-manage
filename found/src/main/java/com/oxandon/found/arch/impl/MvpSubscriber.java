@@ -67,8 +67,6 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
         MvpMessage.Builder builder = new MvpMessage.Builder();
         IMvpMessage msg = builder.reverse(message()).what(IMvpMessage.WHAT_FINISH).build();
         presenter().dispatcher().dispatchToView(msg);
-        presenter = null;
-        message = null;
     }
 
     protected String defaultErrorMsg() {

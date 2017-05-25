@@ -40,7 +40,6 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
     @CallSuper
     @Override
     public void onNext(T o) {
-        doFinishedWork();
     }
 
     @CallSuper
@@ -58,6 +57,7 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
 
     @Override
     public void onComplete() {
+        doFinishedWork();
     }
 
     protected void doFinishedWork() {
@@ -67,6 +67,8 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
         MvpMessage.Builder builder = new MvpMessage.Builder();
         IMvpMessage msg = builder.reverse(message()).what(IMvpMessage.WHAT_FINISH).build();
         presenter().dispatcher().dispatchToView(msg);
+        message = null;
+        presenter = null;
     }
 
     protected String defaultErrorMsg() {

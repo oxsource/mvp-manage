@@ -75,12 +75,13 @@ public class MvpPresenter implements IMvpPresenter {
         try {
             tasking.add(path);
             method.invoke(this, msg);
+            return true;
         } catch (Exception e) {
             removeTask(msg);
             e.printStackTrace();
             catchException(msg, "500 Server error");
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -124,7 +125,7 @@ public class MvpPresenter implements IMvpPresenter {
 
     protected void catchException(IMvpMessage msg, String text) {
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.to(msg.from()).what(IMvpMessage.WHAT_FINISH).msg(text);
+        builder.to(msg.from()).what(IMvpMessage.WHAT_FAILURE).msg(text);
         dispatcher().dispatchToView(builder.build());
     }
 

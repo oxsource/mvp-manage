@@ -39,10 +39,16 @@ public class MvpEvent {
     }
 
     public static boolean singleCast(IMvpMessage message, @NonNull String authority) {
+        if (null == message || null == message.to()) {
+            return false;
+        }
         return authority.equals(message.to().authority());
     }
 
     public static boolean multiCast(IMvpMessage message, @NonNull String authority) {
+        if (null == message || null == message.from()) {
+            return false;
+        }
         return authority.equals(message.from().authority());
     }
 

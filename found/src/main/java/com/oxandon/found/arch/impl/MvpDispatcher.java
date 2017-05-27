@@ -76,12 +76,17 @@ public class MvpDispatcher implements IMvpDispatcher {
     @Override
     public boolean dispatchToPresenter(IMvpMessage msg) {
         try {
+            String viewKey = msg.from().authority();
+            //验证View是否存在
+            WeakReference<IMvpView> reference = views.get(viewKey);
+            if (null == reference || null == reference.get()) {
+                return false;
+            }
             String presenterKey = msg.to().authority();
             Class<? extends IMvpPresenter> clazz = services.get(presenterKey);
             if (null == clazz) {
                 return false;
             }
-            String viewKey = msg.from().authority();
             List<IMvpPresenter> list = presenters.get(viewKey);
             list = null == list ? new ArrayList<IMvpPresenter>() : list;
             IMvpPresenter presenter = null;

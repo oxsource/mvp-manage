@@ -124,7 +124,7 @@ public class MvpPresenter implements IMvpPresenter {
 
     protected void catchException(IMvpMessage msg, String text) {
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.to(msg.from()).what(IMvpMessage.WHAT_FAILURE).msg(text);
+        builder.to(msg.from()).what(IMvpMessage.WHAT_FINISH).msg(text);
         dispatcher().dispatchToView(builder.build());
     }
 

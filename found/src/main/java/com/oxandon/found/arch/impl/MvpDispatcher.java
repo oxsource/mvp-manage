@@ -126,17 +126,18 @@ public class MvpDispatcher implements IMvpDispatcher {
 
     @Override
     public Object provideFromView(IMvpMessage msg) {
+        Object obj = null;
         try {
             String viewKey = msg.to().authority();
             WeakReference<IMvpView> reference = views.get(viewKey);
             if (null != reference && null != reference.get()) {
                 IMvpView view = reference.get();
-                return view.provide(msg);
+                obj = view.provide(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return null == obj ? new Object() : obj;
     }
 
     @Override

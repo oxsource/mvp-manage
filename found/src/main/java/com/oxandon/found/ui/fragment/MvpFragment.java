@@ -123,6 +123,9 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (null != MvpSdk.getDispatcher()) {
+            MvpSdk.getDispatcher().detach(this);
+        }
         layout = null;
     }
 
@@ -186,9 +189,6 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
 
     @CallSuper
     protected void onMvpFinish(final IMvpMessage msg, String path) {
-        if (null != MvpSdk.getDispatcher()) {
-            MvpSdk.getDispatcher().detach(this);
-        }
         String loading = msg.to().getParams(STR_LOADING, "");
         if (!TextUtils.isEmpty(loading)) {
             getHintView().hideLoading();

@@ -40,11 +40,13 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
     @CallSuper
     @Override
     public void onNext(T o) {
+        sendFinishMsg();
     }
 
     @CallSuper
     @Override
     public void onError(Throwable t) {
+        sendFinishMsg();
         String text = t.getMessage();
         if (TextUtils.isEmpty(text)) {
             text = defaultErrorMsg();
@@ -60,13 +62,14 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
         doFinishedWork();
     }
 
-    protected void doFinishedWork() {
-        //从消息任务对列中移除任务
-        presenter().removeTask(message());
-        //构建任务完成消息并通知
+    private void sendFinishMsg() {
         MvpMessage.Builder builder = new MvpMessage.Builder();
         IMvpMessage msg = builder.reverse(message()).what(IMvpMessage.WHAT_FINISH).build();
         presenter().dispatcher().dispatchToView(msg);
+    }
+
+    protected void doFinishedWork() {
+        presenter().removeTask(message());
         message = null;
         presenter = null;
     }

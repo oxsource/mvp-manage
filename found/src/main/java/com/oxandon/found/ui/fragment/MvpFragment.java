@@ -46,6 +46,9 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = onInflateLayout(inflater, container, savedInstanceState);
         iHintView = onBuildHintView();
+        if (null != getDispatcher()) {
+            getDispatcher().attach(this);
+        }
         onInitViews(savedInstanceState);
         return layout;
     }
@@ -144,7 +147,6 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     public boolean function(IMvpMessage msg) {
         boolean success = false;
         if (null != getDispatcher()) {
-            getDispatcher().attach(this);
             success = getDispatcher().dispatchToPresenter(msg);
         }
         if (!success) {

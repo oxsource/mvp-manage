@@ -34,6 +34,7 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        iHintView = onBuildHintView();
         visibility().onCreate(savedInstanceState);
         getFoundActivity().addToInterceptor(this);
         if (null != getEventBus()) {
@@ -45,7 +46,6 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = onInflateLayout(inflater, container, savedInstanceState);
-        iHintView = onBuildHintView();
         if (null != getDispatcher()) {
             getDispatcher().attach(this);
         }

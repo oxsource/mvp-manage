@@ -52,7 +52,7 @@ public class MvpSubscriber<T> extends DisposableSubscriber<T> {
             text = defaultErrorMsg();
         }
         MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.reverse(message()).what(IMvpMessage.WHAT_FAILURE).msg(text);
+        builder.reverse(message()).what(IMvpMessage.WHAT_FAILURE).msg(text).obj(t);
         presenter().dispatcher().dispatchToView(builder.build());
         doFinishedWork();
     }

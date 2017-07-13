@@ -85,6 +85,11 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
         return visibility().visible();
     }
 
+    /**
+     * 在ViewPager中使用
+     *
+     * @param isVisibleToUser
+     */
     @CallSuper
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -104,6 +109,17 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     public void onPause() {
         visibility().onPause();
         super.onPause();
+    }
+
+    /**
+     * 使用hide,replace方式
+     *
+     * @param hidden
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        visibility().onHiddenChanged(hidden);
     }
 
     @Override

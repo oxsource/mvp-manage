@@ -7,10 +7,12 @@ import com.oxandon.found.env.FoundEnvironment;
 import com.oxandon.found.log.FoundLog;
 
 /**
- * Fragment默认在onResume时可见，使用ViewPager后情况特殊：
+ * 一、Fragment默认在onResume时可见
+ * 二、使用ViewPager后情况特殊：
  * 1、ViewPagerAdapter中第一个Fragment是先setUserVisibleHint(true)后才创建View
  * 2、ViewPagerAdapter中其他Fragment是先创建View后setUserVisibleHint(true)
  * 3、使用ViewPagerAdapter异常时先执行Resume再执行setUserVisibleHint(true)
+ * 三、使用hide和show方式时回调onHiddenChanged
  * Created by peng on 2017/5/22.
  */
 
@@ -19,15 +21,17 @@ public class FragmentVisibility {
     public final static int VISIBLE_NORMAL = 0x21;
     public final static int VISIBLE_HINT = 0x22;
     public final static int VISIBLE_HINT_NORMAL = 0x23;
+    public final static int VISIBLE_HIDE_CHANGE = 0x24;
     private boolean visibleToUser = false;
 
-    @IntDef(value = {VISIBLE_NORMAL, VISIBLE_HINT, VISIBLE_HINT_NORMAL})
+    @IntDef(value = {VISIBLE_NORMAL, VISIBLE_HINT, VISIBLE_HINT_NORMAL, VISIBLE_HIDE_CHANGE})
     @interface VisibleType {
     }
 
     private boolean withViewPager = false;
     private boolean hintNormalShow = false;
     private boolean hintNormalHide = false;
+    private boolean hideChange = false;
     private IFragment fragment;
 
     public FragmentVisibility(IFragment fragment) {
@@ -46,7 +50,7 @@ public class FragmentVisibility {
 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         withViewPager = true;
-        printVisibleLayout(false, isVisibleToUser);
+        printVisibleLayout("setUserVisibleHint", isVisibleToUser);
         if (isVisibleToUser && !visible()) {
             if (null == fragment.getLayout()) {
                 hintNormalShow = true;
@@ -65,8 +69,8 @@ public class FragmentVisibility {
     }
 
     public void onResume() {
-        printVisibleLayout(true, true);
-        if (!withViewPager && !visible()) {
+        printVisibleLayout("onResume", true);
+        if (!withViewPager && !hideChange && !visible()) {
             printVisibleToUser(VISIBLE_NORMAL, true);
             onVisible();
         } else {
@@ -80,7 +84,7 @@ public class FragmentVisibility {
     }
 
     public void onPause() {
-        printVisibleLayout(true, false);
+        printVisibleLayout("onPause", false);
         if (!withViewPager && visible()) {
             printVisibleToUser(VISIBLE_NORMAL, false);
             onInvisible();
@@ -91,6 +95,18 @@ public class FragmentVisibility {
                 hintNormalShow = true;
                 onInvisible();
             }
+        }
+    }
+
+    public void onHiddenChanged(boolean hidden) {
+        hideChange = true;
+        printVisibleLayout("onHiddenChanged", false);
+        if (hidden) {
+            printVisibleToUser(VISIBLE_HIDE_CHANGE, false);
+            onInvisible();
+        } else {
+            printVisibleToUser(VISIBLE_HIDE_CHANGE, true);
+            onVisible();
         }
     }
 
@@ -114,30 +130,38 @@ public class FragmentVisibility {
         fragment = null;
     }
 
+    private String visibleType(@VisibleType int type) {
+        String content = "";
+        switch (type) {
+            case VISIBLE_NORMAL:
+                content += "NORMAL";
+                break;
+            case VISIBLE_HINT:
+                content += "HINT";
+                break;
+            case VISIBLE_HINT_NORMAL:
+                content += "HINT_NORMAL";
+                break;
+            case VISIBLE_HIDE_CHANGE:
+                content += "HIDE_CHANGE";
+                break;
+        }
+        return content;
+    }
+
     //测试打印onVisibleToUser和onInvisibleToUser生命周期
     private void printVisibleToUser(@VisibleType int type, boolean visible) {
         if (FoundEnvironment.isDebug() && null != fragment) {
             String content = fragment.getClass().getSimpleName() + "-->Visible=" + visible + "，Type=";
-            switch (type) {
-                case VISIBLE_NORMAL:
-                    content += "NORMAL";
-                    break;
-                case VISIBLE_HINT:
-                    content += "HINT";
-                    break;
-                case VISIBLE_HINT_NORMAL:
-                    content += "HINT_NORMAL";
-                    break;
-            }
-            FoundLog.d(content);
+            String location = visibleType(type);
+            FoundLog.d(content + location);
         }
     }
 
-    private void printVisibleLayout(boolean normal, boolean visible) {
+    private void printVisibleLayout(String method, boolean visible) {
         if (FoundEnvironment.isDebug() && null != fragment) {
-            String location = normal ? "NORMAL" : "HINT";
             boolean flag = null == fragment.getLayout();
-            FoundLog.d(fragment.getClass().getSimpleName() + "-->getLayout()==null: " + flag + ",Location=" + location + "," + "Visible=" + visible);
+            FoundLog.d(fragment.getClass().getSimpleName() + "-->getLayout()==null: " + flag + ",Method=" + method + "," + "Visible=" + visible);
         }
     }
 }

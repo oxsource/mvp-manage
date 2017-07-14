@@ -6,6 +6,9 @@ import android.support.annotation.IntDef;
 import com.oxandon.found.env.FoundEnvironment;
 import com.oxandon.found.log.FoundLog;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * 一、Fragment默认在onResume时可见
  * 二、使用ViewPager后情况特殊：
@@ -25,6 +28,7 @@ public class FragmentVisibility {
     private boolean visibleToUser = false;
 
     @IntDef(value = {VISIBLE_NORMAL, VISIBLE_HINT, VISIBLE_HINT_NORMAL, VISIBLE_HIDE_CHANGE})
+    @Retention(RetentionPolicy.SOURCE)
     @interface VisibleType {
     }
 

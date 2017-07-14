@@ -31,9 +31,9 @@ public class FragmentVisibility {
     private boolean withViewPager = false;
     private boolean hintNormalShow = false;
     private boolean hintNormalHide = false;
-    private IFragment fragment;
+    private MvpFragment fragment;
 
-    public FragmentVisibility(IFragment fragment) {
+    public FragmentVisibility(MvpFragment fragment) {
         this.fragment = fragment;
     }
 
@@ -70,11 +70,10 @@ public class FragmentVisibility {
     public void onResume() {
         printVisibleLayout("onResume", true);
         if (!withViewPager && !visible()) {
-            if (!hideChange[0]) {
+            if (!fragment.isHidden()) {
                 printVisibleToUser(VISIBLE_NORMAL, true);
                 onVisible();
             }
-            hideChange[0] = false;
         } else {
             if (hintNormalShow && !visible()) {
                 printVisibleToUser(VISIBLE_HINT_NORMAL, true);
@@ -83,16 +82,16 @@ public class FragmentVisibility {
                 onVisible();
             }
         }
+
     }
 
     public void onPause() {
         printVisibleLayout("onPause", false);
         if (!withViewPager && visible()) {
-            if (!hideChange[1]) {
+            if (fragment.isVisible()) {
                 printVisibleToUser(VISIBLE_NORMAL, false);
                 onInvisible();
             }
-            hideChange[1] = false;
         } else {
             if (hintNormalHide && visible()) {
                 printVisibleToUser(VISIBLE_HINT_NORMAL, false);
@@ -103,16 +102,12 @@ public class FragmentVisibility {
         }
     }
 
-    private boolean[] hideChange = new boolean[2];
-
     public void onHiddenChanged(boolean hidden) {
         printVisibleLayout("onHiddenChanged", false);
         if (hidden) {
-            hideChange[0] = true;
             printVisibleToUser(VISIBLE_HIDE_CHANGE, false);
             onInvisible();
         } else {
-            hideChange[1] = true;
             printVisibleToUser(VISIBLE_HIDE_CHANGE, true);
             onVisible();
         }

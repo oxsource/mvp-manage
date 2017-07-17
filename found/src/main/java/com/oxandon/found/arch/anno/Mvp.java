@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
 /**
  * Created by peng on 2017/5/20.
  */
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Retention(RetentionPolicy.SOURCE)
 public @interface Mvp {
     int PRESENTER = 0;
     int MODEL = 1;

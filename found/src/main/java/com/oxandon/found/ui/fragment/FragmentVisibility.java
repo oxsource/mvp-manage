@@ -53,7 +53,7 @@ public class FragmentVisibility {
 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         withViewPager = true;
-        printVisibleLayout("setUserVisibleHint", isVisibleToUser);
+        printVisibleLayout("setUserVisibleHint:" + isVisibleToUser);
         if (isVisibleToUser && !visible()) {
             if (null == fragment.getLayout()) {
                 hintNormalShow = true;
@@ -72,7 +72,7 @@ public class FragmentVisibility {
     }
 
     public void onResume() {
-        printVisibleLayout("onResume", true);
+        printVisibleLayout("onResume");
         if (!withViewPager && !visible()) {
             if (!fragment.isHidden()) {
                 printVisibleToUser(VISIBLE_NORMAL, true);
@@ -90,9 +90,11 @@ public class FragmentVisibility {
     }
 
     public void onPause() {
-        printVisibleLayout("onPause", false);
+        printVisibleLayout("onPause");
         if (!withViewPager && visible()) {
-            if (fragment.isVisible()) {
+            boolean retain = fragment.isAdded() && fragment.isVisible();
+            boolean destroy = !fragment.isAdded() && !fragment.isVisible();
+            if (retain || destroy) {
                 printVisibleToUser(VISIBLE_NORMAL, false);
                 onInvisible();
             }
@@ -107,7 +109,7 @@ public class FragmentVisibility {
     }
 
     public void onHiddenChanged(boolean hidden) {
-        printVisibleLayout("onHiddenChanged", false);
+        printVisibleLayout("onHiddenChanged:" + !hidden);
         if (hidden) {
             printVisibleToUser(VISIBLE_HIDE_CHANGE, false);
             onInvisible();
@@ -159,16 +161,30 @@ public class FragmentVisibility {
     //测试打印onVisibleToUser和onInvisibleToUser生命周期
     private void printVisibleToUser(@VisibleType int type, boolean visible) {
         if (FoundEnvironment.isDebug() && null != fragment) {
-            String content = fragment.getClass().getSimpleName() + "-->Visible=" + visible + "，Type=";
+            String tag = fragment.getClass().getSimpleName();
+            String content = tag + "-->Visible=" + visible + "，Type=";
             String location = visibleType(type);
             FoundLog.d(content + location);
         }
     }
 
-    private void printVisibleLayout(String method, boolean visible) {
+    private void printVisibleLayout(String method) {
         if (FoundEnvironment.isDebug() && null != fragment) {
             boolean flag = null == fragment.getLayout();
-            FoundLog.d(fragment.getClass().getSimpleName() + "-->getLayout()==null: " + flag + ",Method=" + method + "," + "Visible=" + visible);
+
+            String tag = fragment.getClass().getSimpleName();
+            StringBuffer sbf = new StringBuffer();
+            sbf.append(tag + "--->");
+            sbf.append("isHidden:" + fragment.isHidden());
+            sbf.append(",isVisible:" + fragment.isVisible());
+            sbf.append(",isResumed:" + fragment.isResumed());
+            sbf.append(",isAdded:" + fragment.isAdded());
+            sbf.append(",isDetached:" + fragment.isDetached());
+            sbf.append(",isInLayout:" + fragment.isInLayout());
+            sbf.append(",isRemoving:" + fragment.isRemoving());
+            FoundLog.d(sbf.toString());
+
+            FoundLog.d(tag + "-->getLayout()==null: " + flag + ",Method=" + method + "," + "Visible=" + visible());
         }
     }
 }

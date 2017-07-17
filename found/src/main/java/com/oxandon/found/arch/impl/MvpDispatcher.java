@@ -7,6 +7,7 @@ import com.oxandon.found.arch.protocol.IMvpDispatcher;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpPresenter;
 import com.oxandon.found.arch.protocol.IMvpView;
+import com.oxandon.found.log.FoundLog;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
@@ -20,6 +21,7 @@ import java.util.Map;
  * Created by peng on 2017/5/20.
  */
 public class MvpDispatcher implements IMvpDispatcher {
+    private final String TAG = MvpDispatcher.class.getSimpleName();
     private final Map<String, Class<? extends IMvpPresenter>> services = new HashMap<>();
     private final Map<String, WeakReference<IMvpView>> views = new HashMap<>();
     private final Map<String, List<IMvpPresenter>> presenters = new HashMap<>();
@@ -80,11 +82,13 @@ public class MvpDispatcher implements IMvpDispatcher {
             //验证View是否存在
             WeakReference<IMvpView> reference = views.get(viewKey);
             if (null == reference || null == reference.get()) {
+                FoundLog.d(TAG + ":[dispatchToPresenter] view is null");
                 return false;
             }
             String presenterKey = msg.to().authority();
             Class<? extends IMvpPresenter> clazz = services.get(presenterKey);
             if (null == clazz) {
+                FoundLog.d(TAG + ":[dispatchToPresenter] presenter is null");
                 return false;
             }
             List<IMvpPresenter> list = presenters.get(viewKey);
@@ -104,6 +108,7 @@ public class MvpDispatcher implements IMvpDispatcher {
             }
             return presenter.distribute(msg);
         } catch (Exception e) {
+            FoundLog.d(TAG + ":[dispatchToPresenter] dispatch exception," + e);
             e.printStackTrace();
         }
         return false;
@@ -117,8 +122,11 @@ public class MvpDispatcher implements IMvpDispatcher {
             if (null != reference && null != reference.get()) {
                 IMvpView view = reference.get();
                 return view.dispatch(msg);
+            } else {
+                FoundLog.d(TAG + ":[dispatchToView] view is null");
             }
         } catch (Exception e) {
+            FoundLog.d(TAG + ":[dispatchToView] dispatch exception," + e);
             e.printStackTrace();
         }
         return false;
@@ -133,8 +141,11 @@ public class MvpDispatcher implements IMvpDispatcher {
             if (null != reference && null != reference.get()) {
                 IMvpView view = reference.get();
                 obj = view.provide(msg);
+            } else {
+                FoundLog.d(TAG + ":[provideFromView] view is null");
             }
         } catch (Exception e) {
+            FoundLog.d(TAG + ":[provideFromView] provide exception," + e);
             e.printStackTrace();
         }
         return null == obj ? new Object() : obj;

@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * Created by peng on 2017/5/20.
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Mvp {
     int PRESENTER = 0;
     int MODEL = 1;

@@ -11,6 +11,7 @@ import com.oxandon.found.arch.impl.MvpMessage;
 import com.oxandon.found.arch.impl.MvpSubscriber;
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
 import com.oxandon.found.arch.protocol.IMvpMessage;
+import com.oxandon.mvp.annotation.Controller;
 
 import org.reactivestreams.Publisher;
 
@@ -22,6 +23,7 @@ import io.reactivex.functions.Function;
  * Created by peng on 2017/5/20.
  */
 @Mvp(value = "member", type = Mvp.PRESENTER)
+@Controller(module = "application", value = "MainApplicationDispatcher")
 public class MemberPresenter extends HttpPresenter {
     private MemberRepository repository;
 

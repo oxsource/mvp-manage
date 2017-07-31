@@ -39,11 +39,11 @@ public class DispatcherProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         Set<? extends Element> controllers = roundEnvironment.getElementsAnnotatedWith(Controller.class);
-        if (null == controllers && controllers.size() == 0) {
+        if (null == controllers || controllers.size() == 0) {
             return false;
         }
         Set<? extends Element> dispatchers = roundEnvironment.getElementsAnnotatedWith(Dispatcher.class);
-        if (null == dispatchers && dispatchers.size() != 1) {
+        if (null == dispatchers || dispatchers.size() != 1) {
             return false;
         }
         final Element dispatcher = dispatchers.iterator().next();

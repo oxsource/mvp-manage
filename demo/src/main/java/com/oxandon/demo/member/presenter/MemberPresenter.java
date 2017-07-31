@@ -21,7 +21,7 @@ import io.reactivex.functions.Function;
 /**
  * Created by peng on 2017/5/20.
  */
-@Controller(module = "member", value = "MemberPresenter")
+@Controller(module = "member", value = "member")
 public class MemberPresenter extends HttpPresenter {
     private MemberRepository repository;
 

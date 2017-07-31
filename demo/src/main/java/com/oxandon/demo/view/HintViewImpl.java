@@ -69,8 +69,8 @@ public class HintViewImpl implements IHintView {
                 }
             });
         }
-        if (!TextUtils.isEmpty(iAlertTemple.negtiveText())) {
-            builder = builder.setNegativeButton(iAlertTemple.negtiveText(), new DialogInterface.OnClickListener() {
+        if (!TextUtils.isEmpty(iAlertTemple.negativeText())) {
+            builder = builder.setNegativeButton(iAlertTemple.negativeText(), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     hideAlert();

@@ -23,7 +23,7 @@ public class ElementInfo {
             field = packageSymbol.getClass().getField("fullname");
             pkg = field.get(packageSymbol).toString();
             //decode file
-            field = element.getClass().getField("sourle");
+            field = element.getClass().getField("sourcefile");
             Object sourceFile = field.get(element);
             field = sourceFile.getClass().getDeclaredField("file");
             field.setAccessible(true);

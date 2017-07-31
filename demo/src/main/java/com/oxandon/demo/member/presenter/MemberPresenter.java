@@ -4,14 +4,13 @@ import android.text.TextUtils;
 
 import com.oxandon.demo.common.HttpResult;
 import com.oxandon.demo.member.model.MemberRepository;
-import com.oxandon.found.arch.anno.Mvp;
-import com.oxandon.found.arch.anno.RequestMapping;
 import com.oxandon.found.arch.impl.HttpPresenter;
 import com.oxandon.found.arch.impl.MvpMessage;
 import com.oxandon.found.arch.impl.MvpSubscriber;
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.mvp.annotation.Controller;
+import com.oxandon.mvp.annotation.RequestMapping;
 
 import org.reactivestreams.Publisher;
 
@@ -22,8 +21,7 @@ import io.reactivex.functions.Function;
 /**
  * Created by peng on 2017/5/20.
  */
-@Mvp(value = "member", type = Mvp.PRESENTER)
-@Controller(module = "application", value = "MainApplicationDispatcher")
+@Controller(module = "member", value = "MemberPresenter")
 public class MemberPresenter extends HttpPresenter {
     private MemberRepository repository;
 

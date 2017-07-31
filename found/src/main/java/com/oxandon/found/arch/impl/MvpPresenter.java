@@ -3,14 +3,14 @@ package com.oxandon.found.arch.impl;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
-import com.oxandon.found.arch.anno.Mvp;
-import com.oxandon.found.arch.anno.RequestMapping;
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpPresenter;
 import com.oxandon.found.arch.protocol.IMvpUri;
 import com.oxandon.found.except.CheckArgumentException;
 import com.oxandon.found.log.FoundLog;
+import com.oxandon.mvp.annotation.Controller;
+import com.oxandon.mvp.annotation.RequestMapping;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -99,8 +99,8 @@ public class MvpPresenter implements IMvpPresenter {
 
     @Override
     public String authority() {
-        Mvp mvp = getClass().getAnnotation(Mvp.class);
-        return mvp.value();
+        Controller controller = getClass().getAnnotation(Controller.class);
+        return controller.value();
     }
 
     @Override

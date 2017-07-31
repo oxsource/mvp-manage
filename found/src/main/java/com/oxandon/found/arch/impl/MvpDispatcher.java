@@ -2,12 +2,12 @@ package com.oxandon.found.arch.impl;
 
 import android.support.annotation.NonNull;
 
-import com.oxandon.found.arch.anno.Mvp;
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpPresenter;
 import com.oxandon.found.arch.protocol.IMvpView;
 import com.oxandon.found.log.FoundLog;
+import com.oxandon.mvp.annotation.Controller;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
@@ -31,9 +31,9 @@ public class MvpDispatcher implements IMvpDispatcher {
             return;
         }
         for (Class<? extends IMvpPresenter> clazz : list) {
-            Mvp mvp = clazz.getAnnotation(Mvp.class);
-            if (null != mvp && mvp.type() == Mvp.PRESENTER) {
-                services.put(mvp.value(), clazz);
+            Controller controller = clazz.getAnnotation(Controller.class);
+            if (null != controller) {
+                services.put(controller.value(), clazz);
             }
         }
     }

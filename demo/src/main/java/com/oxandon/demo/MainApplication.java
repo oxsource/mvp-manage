@@ -16,6 +16,6 @@ public class MainApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         FoundEnvironment.inject(this, true);
-        MvpSdk.bind(MainMvpDispatcher.class);
+        MvpSdk.bind(MainDispatcher.class);
     }
 }

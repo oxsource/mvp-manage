@@ -5,9 +5,9 @@ import com.oxandon.mvp.annotation.Controller;
 import com.oxandon.mvp.annotation.Dispatcher;
 
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -96,8 +96,10 @@ public class DispatcherProcessor extends AbstractProcessor {
         List<String> codes = new ArrayList<>();
         List<String> imports = new ArrayList<>();
         imports.add("android.support.annotation.NonNull");
-        imports.add("com.oxandon.found.arch.impl.MvpDispatcher;");
+        imports.add("com.oxandon.found.arch.impl.MvpDispatcher");
         imports.add("com.oxandon.found.arch.protocol.IMvpPresenter");
+        imports.add("java.util.ArrayList");
+        imports.add("java.util.List");
 
         Iterator<Map.Entry<String, List<Element>>> iterator = maps.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -109,25 +111,25 @@ public class DispatcherProcessor extends AbstractProcessor {
             }
             for (Element element : list) {
                 ElementInfo info = new ElementInfo(element);
-                imports.add(info.getPkg());
+                imports.add(info.getPkg() + "." + info.getName());
                 codes.add(String.format("list.add(%s.class);", info.getName()));
             }
         }
         StringBuffer sbf = new StringBuffer();
-        sbf.append(String.format("package %s;", pkg));
+        sbf.append(String.format("package %s;\n", pkg));
         for (int i = 0; i < imports.size(); i++) {
             sbf.append("\nimport " + imports.get(i) + ";");
         }
         sbf.append("\n\n");
         sbf.append(String.format("public class %s extends MvpDispatcher{", className));
-        sbf.append("\n\t@NonNull");
+        sbf.append("\n\n\t@NonNull");
         sbf.append("\n\t@Override");
         sbf.append("\n\tprotected List<Class<? extends IMvpPresenter>> support() {");
         sbf.append("\n\t\tList<Class<? extends IMvpPresenter>> list = new ArrayList<>();");
         for (int i = 0; i < codes.size(); i++) {
             sbf.append("\n\t\t" + codes.get(i));
         }
-        sbf.append("\n\t\treturn list;}");
+        sbf.append("\n\t\treturn list;");
         sbf.append("\n\t}");
         sbf.append("\n}");
         return sbf.toString();
@@ -148,13 +150,15 @@ public class DispatcherProcessor extends AbstractProcessor {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (null != bw) {
-                try {
-                    bw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            quitClose(bw);
+        }
+    }
+
+    private void quitClose(Closeable closeable) {
+        try {
+            closeable.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

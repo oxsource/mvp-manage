@@ -11,10 +11,10 @@ import android.view.View;
 public final class AlertTemple {
     private CharSequence title;
     private CharSequence message;
-    private CharSequence negtiveText;
+    private CharSequence negativeText;
     private CharSequence positiveText;
 
-    private View.OnClickListener negtiveClick;
+    private View.OnClickListener negativeClick;
     private View.OnClickListener positiveClick;
 
     public AlertTemple() {
@@ -28,7 +28,7 @@ public final class AlertTemple {
     public AlertTemple(CharSequence title, CharSequence message) {
         this.title = title;
         this.message = message;
-        negtiveText = "取消";
+        negativeText = "取消";
         positiveText = "确定";
     }
 
@@ -41,7 +41,7 @@ public final class AlertTemple {
     }
 
     public View.OnClickListener onNegtiveClick() {
-        return negtiveClick;
+        return negativeClick;
     }
 
     public void setTitle(CharSequence title) {
@@ -52,16 +52,16 @@ public final class AlertTemple {
         this.message = message;
     }
 
-    public void setNegtiveText(CharSequence negtiveText) {
-        this.negtiveText = negtiveText;
+    public void setNegativeText(CharSequence negativeText) {
+        this.negativeText = negativeText;
     }
 
     public void setPositiveText(CharSequence positiveText) {
         this.positiveText = positiveText;
     }
 
-    public void setNegtiveClick(View.OnClickListener negtiveClick) {
-        this.negtiveClick = negtiveClick;
+    public void setNegativeClick(View.OnClickListener negativeClick) {
+        this.negativeClick = negativeClick;
     }
 
     public void setPositiveClick(View.OnClickListener positiveClick) {
@@ -72,8 +72,8 @@ public final class AlertTemple {
         return positiveClick;
     }
 
-    public CharSequence negtiveText() {
-        return negtiveText;
+    public CharSequence negativeText() {
+        return negativeText;
     }
 
     public CharSequence positiveText() {

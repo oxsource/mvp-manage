@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.oxandon.demo.view.HintViewImpl;
 import com.oxandon.found.arch.impl.MvpMessage;
+import com.oxandon.found.arch.impl.MvpSdk;
 import com.oxandon.found.arch.impl.MvpUri;
 import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.arch.protocol.IMvpView;
@@ -22,7 +23,7 @@ public class MainActivity extends Activity implements IMvpView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainMvpDispatcher.get().attach(this);
+        MvpSdk.dispatcher().attach(this);
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,7 +38,7 @@ public class MainActivity extends Activity implements IMvpView {
 
     @Override
     protected void onDestroy() {
-        MainMvpDispatcher.get().detach(this);
+        MvpSdk.dispatcher().detach(this);
         super.onDestroy();
     }
 
@@ -56,7 +57,7 @@ public class MainActivity extends Activity implements IMvpView {
 
     @Override
     public boolean function(IMvpMessage msg) {
-        return MainMvpDispatcher.get().dispatchToPresenter(msg);
+        return MvpSdk.dispatcher().dispatchToPresenter(msg);
     }
 
     private HintViewImpl hintView = new HintViewImpl(this);

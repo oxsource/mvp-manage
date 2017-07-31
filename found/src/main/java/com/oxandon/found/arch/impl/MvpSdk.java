@@ -1,5 +1,7 @@
 package com.oxandon.found.arch.impl;
 
+import android.support.annotation.MainThread;
+
 import com.oxandon.found.arch.protocol.IMvpDispatcher;
 
 /**
@@ -7,13 +9,30 @@ import com.oxandon.found.arch.protocol.IMvpDispatcher;
  */
 
 public class MvpSdk {
-    private static IMvpDispatcher dispatcher;
+    private static IMvpDispatcher instance;
+    private static Class<? extends IMvpDispatcher> clazz;
 
-    public static void bind(IMvpDispatcher dispatcher) {
-        MvpSdk.dispatcher = dispatcher;
+    private MvpSdk() {
     }
 
-    public static IMvpDispatcher getDispatcher() {
-        return dispatcher;
+    public static void bind(Class<? extends IMvpDispatcher> clazz) {
+        MvpSdk.clazz = clazz;
+    }
+
+    @MainThread
+    public static IMvpDispatcher dispatcher() {
+        if (null == clazz) {
+            throw new IllegalStateException("please bind IMvpDispatcher's implements clazz");
+        }
+        if (null == instance) {
+            try {
+                instance = clazz.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 }

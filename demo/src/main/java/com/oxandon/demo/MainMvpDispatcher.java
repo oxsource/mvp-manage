@@ -14,20 +14,6 @@ import java.util.List;
  */
 
 public class MainMvpDispatcher extends MvpDispatcher {
-    private static ThreadLocal<MainMvpDispatcher> local = new ThreadLocal<>();
-    private static MainMvpDispatcher instance;
-
-    public static MainMvpDispatcher get() {
-        if (null == local.get()) {
-            synchronized (MainMvpDispatcher.class) {
-                if (null == instance) {
-                    instance = new MainMvpDispatcher();
-                }
-            }
-            local.set(instance);
-        }
-        return local.get();
-    }
 
     @NonNull
     @Override

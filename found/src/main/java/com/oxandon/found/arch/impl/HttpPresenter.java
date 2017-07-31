@@ -2,11 +2,11 @@ package com.oxandon.found.arch.impl;
 
 import android.support.annotation.CallSuper;
 
+import com.oxandon.found.arch.protocol.IMvpDispatcher;
+import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.http.INetworkEngine;
 import com.oxandon.found.http.NetworkEngineImpl;
 import com.oxandon.found.http.NetworkUtil;
-import com.oxandon.found.arch.protocol.IMvpDispatcher;
-import com.oxandon.found.arch.protocol.IMvpMessage;
 import com.oxandon.found.parcel.IParcelFormat;
 import com.oxandon.found.parcel.ParcelFormatImpl;
 

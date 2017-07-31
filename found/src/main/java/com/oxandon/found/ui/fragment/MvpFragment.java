@@ -19,8 +19,6 @@ import com.oxandon.found.ui.widget.IHintView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import static com.oxandon.found.arch.impl.MvpSdk.getDispatcher;
-
 /**
  * Created by peng on 2017/5/22.
  */
@@ -46,8 +44,8 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = onInflateLayout(inflater, container, savedInstanceState);
-        if (null != getDispatcher()) {
-            getDispatcher().attach(this);
+        if (null != MvpSdk.dispatcher()) {
+            MvpSdk.dispatcher().attach(this);
         }
         onInitViews(savedInstanceState);
         return layout;
@@ -142,8 +140,8 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (null != MvpSdk.getDispatcher()) {
-            MvpSdk.getDispatcher().detach(this);
+        if (null != MvpSdk.dispatcher()) {
+            MvpSdk.dispatcher().detach(this);
         }
         layout = null;
     }
@@ -162,8 +160,8 @@ public abstract class MvpFragment extends Fragment implements IFragment, IMvpVie
     @Override
     public boolean function(IMvpMessage msg) {
         boolean success = false;
-        if (null != getDispatcher()) {
-            success = getDispatcher().dispatchToPresenter(msg);
+        if (null != MvpSdk.dispatcher()) {
+            success = MvpSdk.dispatcher().dispatchToPresenter(msg);
         }
         if (!success) {
             onMvpFinish(msg, msg.from().path());

@@ -2,7 +2,8 @@ apply plugin: 'java'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':mvp-annotation')
+    compile 'com.github.oxsource:mvp-annotation:1.0.0'
+//    compile project(':mvp-annotation')
     compile 'com.google.auto.service:auto-service:1.0-rc3'
 }
 

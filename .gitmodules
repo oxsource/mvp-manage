@@ -4,3 +4,6 @@
 [submodule "mvp-compiler"]
 	path = mvp-compiler
 	url = git@github.com:oxsource/mvp-compiler.git
+[submodule "mvp"]
+	path = mvp
+	url = git@github.com:oxsource/mvp.git

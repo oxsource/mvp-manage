@@ -1,5 +1,10 @@
 apply plugin: 'java'
 
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.github.oxsource:mvp-annotation:1.0.0'

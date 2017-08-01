@@ -30,5 +30,6 @@ dependencies {
     })
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile project(':mvp')
+    compile 'com.github.oxsource:mvp:1.2.0'
+    annotationProcessor 'com.github.oxsource:mvp-compiler:1.0.1'
 }

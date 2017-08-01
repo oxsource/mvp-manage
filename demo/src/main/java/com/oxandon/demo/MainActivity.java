@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.oxandon.demo.view.HintViewImpl;
-import com.oxandon.found.arch.impl.MvpMessage;
-import com.oxandon.found.arch.impl.MvpSdk;
-import com.oxandon.found.arch.impl.MvpUri;
-import com.oxandon.found.arch.protocol.IMvpMessage;
-import com.oxandon.found.arch.protocol.IMvpView;
+import com.oxandon.mvp.arch.impl.MvpMessage;
+import com.oxandon.mvp.arch.impl.MvpSdk;
+import com.oxandon.mvp.arch.impl.MvpUri;
+import com.oxandon.mvp.arch.protocol.IMvpMessage;
+import com.oxandon.mvp.arch.protocol.IMvpView;
 
 /**
  * Created by peng on 2017/5/20.

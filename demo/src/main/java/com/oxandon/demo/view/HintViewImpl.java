@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.oxandon.found.ui.widget.AlertTemple;
-import com.oxandon.found.ui.widget.IHintView;
+import com.oxandon.mvp.ui.widget.AlertTemple;
+import com.oxandon.mvp.ui.widget.IHintView;
 
 /**
  * 界面提示接口实现类

@@ -3,8 +3,8 @@ package com.oxandon.demo.member.model;
 import android.support.annotation.NonNull;
 
 import com.oxandon.demo.common.HttpResult;
-import com.oxandon.found.http.INetworkEngine;
-import com.oxandon.found.arch.impl.MvpRepository;
+import com.oxandon.mvp.arch.impl.MvpRepository;
+import com.oxandon.mvp.http.INetworkEngine;
 
 import java.util.HashMap;
 import java.util.Map;

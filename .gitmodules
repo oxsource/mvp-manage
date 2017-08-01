@@ -1,0 +1,3 @@
+[submodule "mvp-annotation"]
+	path = mvp-annotation
+	url = git@github.com:oxsource/mvp-annotation.git

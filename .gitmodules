@@ -1,3 +1,6 @@
 [submodule "mvp-annotation"]
 	path = mvp-annotation
 	url = git@github.com:oxsource/mvp-annotation.git
+[submodule "mvp-compiler"]
+	path = mvp-compiler
+	url = git@github.com:oxsource/mvp-compiler.git

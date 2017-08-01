@@ -1,1 +1,1 @@
-include ':found', ':demo', ':annotation', ':compiler'
+include ':mvp', ':demo', ':mvp-annotation', ':mvp-compiler'

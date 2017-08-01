@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.oxsource'
 
 android {
     compileSdkVersion 25
@@ -44,5 +47,5 @@ dependencies {
     compile 'com.meituan.android.walle:library:1.1.1'
     //MULTI DEX
     compile 'com.android.support:multidex:1.0.0'
-    compile project(':annotation')
+    compile project(':mvp-annotation')
 }

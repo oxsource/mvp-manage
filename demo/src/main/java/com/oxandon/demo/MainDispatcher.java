@@ -1,13 +1,11 @@
 package com.oxandon.demo;
 
 import android.support.annotation.NonNull;
-
-import com.oxandon.demo.member.presenter.MemberPresenter;
 import com.oxandon.mvp.arch.impl.MvpDispatcher;
 import com.oxandon.mvp.arch.protocol.IMvpPresenter;
-
 import java.util.ArrayList;
 import java.util.List;
+import com.oxandon.demo.member.presenter.MemberPresenter;
 
 public class MainDispatcher extends MvpDispatcher{
 

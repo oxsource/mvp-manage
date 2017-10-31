@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion parent.ext.compileSdkVersion
+    buildToolsVersion parent.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.oxandon.demo"
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion parent.ext.minSdkVersion
+        targetSdkVersion parent.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -21,6 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -30,8 +34,8 @@ dependencies {
     })
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-//    compile project(':mvp')
+    //    compile project(':mvp')
     annotationProcessor project(':mvp-compiler')
-    compile 'com.github.oxsource:mvp:1.3.0'
-//    annotationProcessor 'com.github.oxsource:mvp-compiler:1.0.3'
+    compile "com.github.oxsource:mvp:${MVP_CORE_VERSION}"
+    //    annotationProcessor "com.github.oxsource:mvp-compiler:${MVP_COMPILER_VERSION}"
 }

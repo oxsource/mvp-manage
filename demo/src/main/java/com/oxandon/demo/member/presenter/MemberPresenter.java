@@ -12,11 +12,7 @@ import com.oxandon.mvp.arch.impl.MvpSubscriber;
 import com.oxandon.mvp.arch.protocol.IMvpDispatcher;
 import com.oxandon.mvp.arch.protocol.IMvpMessage;
 
-import org.reactivestreams.Publisher;
-
 import io.reactivex.Flowable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 /**
  * Created by peng on 2017/5/20.
@@ -37,21 +33,16 @@ public class MemberPresenter extends HttpPresenter {
 
     @RequestMapping("login")
     public void doLogin(final IMvpMessage message) {
-        MvpMessage.Builder builder = new MvpMessage.Builder();
-        builder.reverse(message);
-        Object obj = dispatcher().provideFromView(builder.build());
-        Flowable<HttpResult> flowAble = Flowable.just(obj).concatMap(new Function<Object, Publisher<? extends HttpResult>>() {
-            @Override
-            public Publisher<? extends HttpResult> apply(@NonNull Object obj) throws Exception {
-                String[] params = getParcel().opt(obj, String[].class);
-                checkArgument(null == params || params.length != 2, "用户名或密码不能为空");
-                checkArgument(TextUtils.isEmpty(params[0]), "用户名不能为空");
-                checkArgument(TextUtils.isEmpty(params[1]), "密码不能为空");
-                return repository.login(getNetwork(), params[0], params[1]);
-            }
+        Object obj = dispatcher().provideFromView(message);
+        Flowable<HttpResult> flowAble = Flowable.just(obj).concatMap(obj1 -> {
+            String[] params = getParcel().opt(obj1, String[].class);
+            checkArgument(null == params || params.length != 2, "用户名或密码不能为空");
+            checkArgument(TextUtils.isEmpty(params[0]), "用户名不能为空");
+            checkArgument(TextUtils.isEmpty(params[1]), "密码不能为空");
+            Thread.sleep(5000);
+            return repository.login(getNetwork(), params[0], params[1]);
         });
-        doRxSubscribe(flowAble, new MvpSubscriber<HttpResult>(this, message) {
-
+        doRxSubscribe(message, flowAble, new MvpSubscriber<HttpResult>(this, message) {
             @Override
             public void onNext(HttpResult result) {
                 super.onNext(result);
@@ -61,7 +52,7 @@ public class MemberPresenter extends HttpPresenter {
                 } else {
                     builder.what(IMvpMessage.WHAT_FAILURE);
                 }
-                builder.reverse(message).msg(result.getMessage());
+                builder.clone(message).msg(result.getMessage());
                 dispatcher().dispatchToView(builder.build());
             }
         });

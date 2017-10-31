@@ -29,4 +29,12 @@
         android:text=""
         android:textColor="@color/whiteSmoke"
         android:textSize="@dimen/common_text_size_xs" />
+
+    <ImageButton
+        android:id="@+id/btCancel"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
 </RelativeLayout>

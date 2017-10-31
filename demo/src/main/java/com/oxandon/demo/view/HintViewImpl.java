@@ -28,7 +28,7 @@ public class HintViewImpl implements IHintView {
     }
 
     @Override
-    public void showLoading(CharSequence sequence, boolean cancel) {
+    public void showLoading(CharSequence sequence, DialogInterface.OnCancelListener listener) {
         hideLoading();
         if (null == activity) {
             return;
@@ -37,7 +37,8 @@ public class HintViewImpl implements IHintView {
             progressDialog = SkinProgressDialog.build(activity);
         }
         progressDialog.setMessage(sequence);
-        progressDialog.setCancelable(cancel);
+        progressDialog.setCancelable(null != listener);
+        progressDialog.setOnCancelListener(listener);
         progressDialog.show();
     }
 
